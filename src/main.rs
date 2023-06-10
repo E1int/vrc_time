@@ -19,6 +19,7 @@ struct Arguments {
 fn main() {
     let arguments = Arguments::parse();
     let socket = UdpSocket::bind(&arguments.sender).unwrap();
+    let sleep_duration = time::Duration::from_millis(100);
     loop {
         let time = Local::now();
         let second = time.num_seconds_from_midnight() as f32;
@@ -46,6 +47,6 @@ fn main() {
         socket.send_to(&minute_buffer, &arguments.receiver).unwrap();
         socket.send_to(&hour_buffer, &arguments.receiver).unwrap();
 
-        thread::sleep(time::Duration::from_millis(100));
+        thread::sleep(sleep_duration);
     }
 }
